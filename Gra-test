@@ -7,9 +7,9 @@ class Program
 
     static void Main()
     {
-        Console.WriteLine("Witaj w grze!");
+        Console.WriteLine("Witajże!");
 
-        DisplayText("Tekst wyświetlany na sztywno.");
+        DisplayText("Jakiś tam tekst.");
 
         int variableValue = 10;
         DisplayVariableValue(variableValue);
