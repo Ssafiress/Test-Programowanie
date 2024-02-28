@@ -4,102 +4,90 @@ class Program
 {
     static int playerScore = 0;
     static int computerScore = 0;
-    static bool gameEnded = false;
 
     static void Main()
     {
-        Console.WriteLine("Witaj w grze konsolowej!");
+        Console.WriteLine("Witaj w grze!");
 
-        // Losowanie początkowych wartości
-        Random random = new Random();
-        int randomNumber = random.Next(1, 11);
+        DisplayText("Tekst wyświetlany na sztywno.");
 
-        Console.WriteLine($"Liczba wylosowana na początku gry: {randomNumber}");
+        int variableValue = 10;
+        DisplayVariableValue(variableValue);
 
-        // Główna pętla gry
-        while (!gameEnded)
+        string playerName = GetPlayerName();
+        Console.WriteLine($"Witaj, {playerName}!");
+
+        // Instrukcje warunkowe
+        CheckNumber(variableValue);
+        
+        // Pętla
+        while (playerScore < 3 && computerScore < 3)
         {
-            Console.WriteLine("\nMenu:");
-            Console.WriteLine("1. Wyświetl tekst wpisany na sztywno w kodzie");
-            Console.WriteLine("2. Wyświetl wartość zmiennej");
-            Console.WriteLine("3. Pobierz tekst od gracza");
-            Console.WriteLine("4. Sprawdź warunki");
-            Console.WriteLine("5. Zakończ grę");
-
-            int choice = GetPlayerChoice(1, 5);
-
-            switch (choice)
-            {
-                case 1:
-                    DisplayHardcodedText();
-                    break;
-                case 2:
-                    DisplayVariableValue();
-                    break;
-                case 3:
-                    GetPlayerText();
-                    break;
-                case 4:
-                    CheckConditions();
-                    break;
-                case 5:
-                    gameEnded = true;
-                    break;
-            }
+            PlayRound();
         }
 
-        Console.WriteLine("Dziękujemy za grę!");
+        Console.WriteLine("Koniec gry!");
     }
 
-    static void DisplayHardcodedText()
+    static void DisplayText(string text)
     {
-        Console.WriteLine("Tekst wpisany na sztywno w kodzie: Witaj w grze!");
+        Console.WriteLine(text);
     }
 
-    static void DisplayVariableValue()
+    static void DisplayVariableValue(int value)
     {
-        Console.WriteLine($"Wartość zmiennej playerScore: {playerScore}");
+        Console.WriteLine($"Wartość zmiennej: {value}");
     }
 
-    static void GetPlayerText()
+    static string GetPlayerName()
     {
-        Console.Write("Wprowadź tekst: ");
-        string playerText = Console.ReadLine();
-        Console.WriteLine($"Wprowadzony tekst: {playerText}");
+        Console.Write("Podaj swoje imię: ");
+        return Console.ReadLine();
     }
 
-    static void CheckConditions()
+    static void CheckNumber(int number)
     {
-        Console.WriteLine("Sprawdzanie warunków:");
-        int number = GetPlayerNumber();
-
         if (number > 5)
         {
-            Console.WriteLine("Wprowadzona liczba jest większa niż 5.");
+            Console.WriteLine("Liczba jest większa niż 5.");
         }
         else if (number == 5)
         {
-            Console.WriteLine("Wprowadzona liczba jest równa 5.");
+            Console.WriteLine("Liczba jest równa 5.");
         }
         else
         {
-            Console.WriteLine("Wprowadzona liczba jest mniejsza niż 5.");
+            Console.WriteLine("Liczba jest mniejsza niż 5.");
         }
     }
 
-    static int GetPlayerNumber()
+    static void PlayRound()
     {
-        Console.Write("Wprowadź liczbę: ");
-        while (true)
+        Console.Write("Podaj liczbę: ");
+        int playerChoice = int.Parse(Console.ReadLine());
+
+        // Wykorzystanie random
+        Random random = new Random();
+        int computerChoice = random.Next(1, 11);
+
+        Console.WriteLine($"Komputer wybrał: {computerChoice}");
+
+        // Warunki z porównywaniem liczb
+        if (playerChoice > computerChoice)
         {
-            if (int.TryParse(Console.ReadLine(), out int result))
-            {
-                return result;
-            }
-            else
-            {
-                Console.WriteLine("Błędny format. Wprowadź liczbę ponownie.");
-            }
+            Console.WriteLine("Wygrałeś rundę!");
+            playerScore++;
         }
+        else if (playerChoice < computerChoice)
+        {
+            Console.WriteLine("Przegrałeś rundę!");
+            computerScore++;
+        }
+        else
+        {
+            Console.WriteLine("Remis w rundzie!");
+        }
+
+        Console.WriteLine($"Wynik: Gracz {playerScore} - {computerScore} Komputer");
     }
 }
