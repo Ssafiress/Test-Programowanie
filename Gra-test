@@ -1,0 +1,105 @@
+using System;
+
+class Program
+{
+    static int playerScore = 0;
+    static int computerScore = 0;
+    static bool gameEnded = false;
+
+    static void Main()
+    {
+        Console.WriteLine("Witaj w grze konsolowej!");
+
+        // Losowanie początkowych wartości
+        Random random = new Random();
+        int randomNumber = random.Next(1, 11);
+
+        Console.WriteLine($"Liczba wylosowana na początku gry: {randomNumber}");
+
+        // Główna pętla gry
+        while (!gameEnded)
+        {
+            Console.WriteLine("\nMenu:");
+            Console.WriteLine("1. Wyświetl tekst wpisany na sztywno w kodzie");
+            Console.WriteLine("2. Wyświetl wartość zmiennej");
+            Console.WriteLine("3. Pobierz tekst od gracza");
+            Console.WriteLine("4. Sprawdź warunki");
+            Console.WriteLine("5. Zakończ grę");
+
+            int choice = GetPlayerChoice(1, 5);
+
+            switch (choice)
+            {
+                case 1:
+                    DisplayHardcodedText();
+                    break;
+                case 2:
+                    DisplayVariableValue();
+                    break;
+                case 3:
+                    GetPlayerText();
+                    break;
+                case 4:
+                    CheckConditions();
+                    break;
+                case 5:
+                    gameEnded = true;
+                    break;
+            }
+        }
+
+        Console.WriteLine("Dziękujemy za grę!");
+    }
+
+    static void DisplayHardcodedText()
+    {
+        Console.WriteLine("Tekst wpisany na sztywno w kodzie: Witaj w grze!");
+    }
+
+    static void DisplayVariableValue()
+    {
+        Console.WriteLine($"Wartość zmiennej playerScore: {playerScore}");
+    }
+
+    static void GetPlayerText()
+    {
+        Console.Write("Wprowadź tekst: ");
+        string playerText = Console.ReadLine();
+        Console.WriteLine($"Wprowadzony tekst: {playerText}");
+    }
+
+    static void CheckConditions()
+    {
+        Console.WriteLine("Sprawdzanie warunków:");
+        int number = GetPlayerNumber();
+
+        if (number > 5)
+        {
+            Console.WriteLine("Wprowadzona liczba jest większa niż 5.");
+        }
+        else if (number == 5)
+        {
+            Console.WriteLine("Wprowadzona liczba jest równa 5.");
+        }
+        else
+        {
+            Console.WriteLine("Wprowadzona liczba jest mniejsza niż 5.");
+        }
+    }
+
+    static int GetPlayerNumber()
+    {
+        Console.Write("Wprowadź liczbę: ");
+        while (true)
+        {
+            if (int.TryParse(Console.ReadLine(), out int result))
+            {
+                return result;
+            }
+            else
+            {
+                Console.WriteLine("Błędny format. Wprowadź liczbę ponownie.");
+            }
+        }
+    }
+}
